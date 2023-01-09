@@ -64,17 +64,19 @@ class Lessen extends Controller
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             $result = $this->mankementModel->addMankement($_POST);
+            
+            header('Refresh:3; url=' . URLROOT . '/mankementen/index');
 
             if ($result) {
+
                 echo "<p>Het nieuwe mankement is succesvol toegevoegd</p>";
             } else {
-                echo "<p>Het nieuwe onderwerp is niet toegevoegd</p>";
+                echo "<p>Het nieuwe mankement is niet toegevoegd</p>";
             }
-            header('Refresh:3; url=' . URLROOT . '/mankementen/index');
         }
 
         $data = [
-            'title' => 'Onderwerp Toevoegen',
+            'title' => 'Mankement Toevoegen',
             'autoData' => $autoData
         ];
         $this->view('mankementen/addTopic', $data);

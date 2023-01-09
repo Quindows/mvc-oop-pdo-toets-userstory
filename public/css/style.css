@@ -1,3 +1,29 @@
 body {
-    background-color: aqua;
+    font-family: sans-serif;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+div.info {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+}
+
+div.row {
+    width: 700px;
+    border: 1px solid black;
+    padding: 2rem;
+}
+
+th,
+td {
+    border: 1px solid black;
+}
+
+table {
+    border-spacing: 0;
+    border: 1px solid black;
 }
