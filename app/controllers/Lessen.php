@@ -18,17 +18,21 @@ class Lessen extends Controller
         
             $rows .= "<tr>
                         <td>$info->datum</td>
-                        <td>$info->naam</td>
-                        <td><a href='" . URLROOT . "/lessen/topicslesson/{$info->Id}'><img src='" . URLROOT . "/img/b_props.png' alt='topiclist'></a></td>
+                        <td>$info->mankement</td>
                     </tr>";
+                    // var_dump($result[0]->naam);
         }
 
         $data = [
             'title' => "Overzicht mankementen",
-            'rows' => $rows
+            'rows' => $rows,
+            'naam' => $result[0]->naam,
+            'email' => $result[0]->email,
+            'kenteken' => $result[0]->kenteken,
+            'type' => $result[0]->type
 
         ];
-        $this->view('lessen/index', $data);
+        $this->view('mankementen/index', $data);
     }
 
     function topicsLesson($lesId)
@@ -50,29 +54,29 @@ class Lessen extends Controller
             'rows'  => $rows,
             'lesId' => $lesId
         ];
-        $this->view('lessen/topicslesson', $data);
+        $this->view('mankementen/topicslesson', $data);
     }
 
-    function addTopic($lesId = NULL)
+    function addMankement($autoData = NULL)
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             // var_dump($_POST);
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $result = $this->mankementModel->addTopic($_POST);
+            $result = $this->mankementModel->addMankement($_POST);
 
             if ($result) {
-                echo "<p>Het nieuwe onderwerp is succesvol toegevoegd</p>";
+                echo "<p>Het nieuwe mankement is succesvol toegevoegd</p>";
             } else {
                 echo "<p>Het nieuwe onderwerp is niet toegevoegd</p>";
             }
-            header('Refresh:3; url=' . URLROOT . '/lessen/index');
+            header('Refresh:3; url=' . URLROOT . '/mankementen/index');
         }
 
         $data = [
             'title' => 'Onderwerp Toevoegen',
-            'lesId' => $lesId
+            'autoData' => $autoData
         ];
-        $this->view('lessen/addTopic', $data);
+        $this->view('mankementen/addTopic', $data);
     }
 }

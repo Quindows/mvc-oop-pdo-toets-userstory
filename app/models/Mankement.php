@@ -1,6 +1,6 @@
 <?php
 
-class Les
+class Mankement
 {
     private $db;
 
@@ -18,7 +18,7 @@ class Les
                                 auto.Type       AS type, 
                                 man.Datum       AS datum, 
                                 man.Mankement   AS mankement
-                            FROM `mankenteken` man
+                            FROM `mankementen` man
                             INNER JOIN `auto` 
                             ON auto.id = man.AutoId
                             INNER JOIN `instructeur` ins
@@ -32,12 +32,11 @@ class Les
         return $result;
     }
 
-    public function addTopic($post) 
+    public function addMankement($post) 
     {
-        $sql = "INSERT INTO mankement (manekement)
-                VALUES                (:mankement)";
-
-        $this->db->query($sql);
+        $dateNow = date('Y-m-d');
+        $this->db->query("  INSERT INTO mankementen (AutoId, Datum, Mankement)
+                            VALUES (2, $dateNow, :mankement)");
         $this->db->bind(':mankement', $post['mankement'], PDO::PARAM_STR);
         return $this->db->execute();
     }
