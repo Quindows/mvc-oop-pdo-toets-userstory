@@ -5,36 +5,35 @@ class Lessen extends Controller
 
     public function __construct()
     {
-        $this->lesModel = $this->model('Les');
+        $this->mankementModel = $this->model('Mankement');
     }
 
     public function index()
     {
-        $result = $this->lesModel->getLessons();
+        $result = $this->mankementModel->getMankementen();
        
         // var_dump($result);
         $rows = '';
         foreach($result as $info) {
-            $d = new DateTimeImmutable($info->DatumTijd, new DateTimeZone('Europe/Amsterdam'));
+        
             $rows .= "<tr>
-                        <td>{$d->format('d-m-Y')}</td>
-                        <td>{$d->format('H:i')}</td>
-                        <td>$info->Naam</td>
-                        <td><a href=''><img src='". URLROOT ."/img/b_help.png' alt='questionmark'></a></td>
+                        <td>$info->datum</td>
+                        <td>$info->naam</td>
                         <td><a href='" . URLROOT . "/lessen/topicslesson/{$info->Id}'><img src='" . URLROOT . "/img/b_props.png' alt='topiclist'></a></td>
                     </tr>";
         }
 
         $data = [
-            'title' => "Overzicht Rijlessen",
+            'title' => "Overzicht mankementen",
             'rows' => $rows
+
         ];
         $this->view('lessen/index', $data);
     }
 
     function topicsLesson($lesId)
     {
-        $result = $this->lesModel->getTopicsLesson($lesId);
+        $result = $this->mankementModel->getTopicsLesson($lesId);
 
         // var_dump($result);
         
@@ -60,7 +59,7 @@ class Lessen extends Controller
             // var_dump($_POST);
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $result = $this->lesModel->addTopic($_POST);
+            $result = $this->mankementModel->addTopic($_POST);
 
             if ($result) {
                 echo "<p>Het nieuwe onderwerp is succesvol toegevoegd</p>";

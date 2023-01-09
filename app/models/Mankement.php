@@ -9,7 +9,7 @@ class Les
         $this->db = new Database();
     }    
 
-    public function getLessons()
+    public function getMankementen()
     {
         $this->db->query("  SELECT 
                                 ins.Naam        AS naam, 
@@ -23,7 +23,7 @@ class Les
                             ON auto.id = man.AutoId
                             INNER JOIN `instructeur` ins
                             ON ins.Id = auto.InstructeurId
-                            WHERE auto.InstructeurId = 2");
+                            WHERE auto.InstructeurId = :Id");
         
         $this->db->bind(':Id', 2);
 
@@ -32,28 +32,13 @@ class Les
         return $result;
     }
 
-    public function getTopicsLesson($lessonId)
-    {
-        $this->db->query("SELECT *
-                          FROM Onderwerp
-                          WHERE LesId = :lessonId");
-        $this->db->bind(':lessonId', $lessonId);
-
-        $result = $this->db->resultSet();
-
-        return $result;
-    }
-
     public function addTopic($post) 
     {
-        $sql = "INSERT INTO Onderwerp (LesId
-                                      ,Onderwerp)
-                VALUES                (:lesId
-                                      ,:topic)";
+        $sql = "INSERT INTO mankement (manekement)
+                VALUES                (:mankement)";
 
         $this->db->query($sql);
-        $this->db->bind(':lesId', $post['lesId'], PDO::PARAM_INT);
-        $this->db->bind(':topic', $post['topic'], PDO::PARAM_STR);
+        $this->db->bind(':mankement', $post['mankement'], PDO::PARAM_STR);
         return $this->db->execute();
     }
 }
