@@ -11,15 +11,19 @@ class Les
 
     public function getLessons()
     {
-        $this->db->query("SELECT Les.DatumTijd
-                                ,Leerling.Naam
-                                ,Les.Id
-                          FROM Les
-                          INNER JOIN Instructeur
-                          ON Instructeur.Id = Les.InstructeurId
-                          INNER JOIN Leerling
-                          ON Leerling.Id = Les.LeerlingId
-                          WHERE Instructeur.Id = :Id");
+        $this->db->query("  SELECT 
+                                ins.Naam        AS naam, 
+                                ins.Email       AS email, 
+                                auto.Kenteken   AS kenteken, 
+                                auto.Type       AS type, 
+                                man.Datum       AS datum, 
+                                man.Mankement   AS mankement
+                            FROM `mankenteken` man
+                            INNER JOIN `auto` 
+                            ON auto.id = man.AutoId
+                            INNER JOIN `instructeur` ins
+                            ON ins.Id = auto.InstructeurId
+                            WHERE auto.InstructeurId = 2");
         
         $this->db->bind(':Id', 2);
 
